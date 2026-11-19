@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Какой ты мультимедиа-творец?</title>
+<style>
+:root{--bg:#000;--tx:#fff;--mu:#9a9a9a;--bd:#2b2b2b;--ok:#4ade80;--bad:#f87171;color-scheme:dark;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+html{scroll-padding-top:env(safe-area-inset-top,0px);background:#000}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;min-height:100vh;display:flex;justify-content:center;padding:20px}
+.app{width:100%;max-width:600px}
+.card{border:1px solid var(--bd);border-radius:14px;padding:28px}
+h1{font-size:30px;margin:0 0 12px;line-height:1.2;font-weight:700;letter-spacing:-.02em;color:#fff}
+p{color:var(--mu);line-height:1.6;margin:0 0 14px}
+.btn{border:1px solid #fff;border-radius:10px;padding:14px 22px;font-size:16px;font-weight:600;color:#000;background:#fff;cursor:pointer;width:100%;margin-top:8px;transition:.15s}
+.btn:hover{opacity:.85}
+.btn.sec{background:transparent;color:#fff;border-color:var(--bd)}
+.btn.sec:hover{border-color:#fff;opacity:1}
+.top{display:flex;justify-content:space-between;font-size:13px;color:var(--mu);margin-bottom:12px;gap:8px;flex-wrap:wrap}
+.bar{height:2px;background:var(--bd);margin-bottom:24px}
+.bar i{display:block;height:100%;width:100%;background:#fff;transition:width .1s linear}
+.tag{display:block;font-size:12px;color:var(--mu);margin-bottom:10px;text-transform:uppercase;letter-spacing:.08em}
+.q{font-size:22px;font-weight:600;margin:0 0 20px;line-height:1.35}
+.opt{display:block;width:100%;text-align:left;padding:14px 16px;margin-bottom:10px;border:1px solid var(--bd);border-radius:10px;background:transparent;color:#fff;font-size:16px;cursor:pointer;transition:.15s}
+.opt:hover:not(:disabled){border-color:#fff}
+.opt.ok{border-color:var(--ok);color:var(--ok)}
+.opt.bad{border-color:var(--bad);color:var(--bad)}
+.opt:disabled{cursor:default}
+.exp{margin:14px 0;padding:0 0 0 14px;border-left:2px solid #fff;font-size:14px;line-height:1.6;color:var(--mu)}
+.hide{display:none}
+.em{font-size:44px;margin:0 0 6px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 18px}
+.chips b{font-size:12px;font-weight:500;border:1px solid var(--bd);padding:4px 12px;border-radius:20px;color:var(--mu)}
+.row{display:flex;align-items:center;gap:10px;font-size:13px;margin:8px 0;color:var(--mu)}
+.row span:first-child{width:160px;flex:none}
+.row i{display:block;height:4px;border-radius:2px;background:#fff;min-width:4px;transition:width .6s}
+.cta{margin:22px 0 16px;padding:16px 0 0;border-top:1px solid var(--bd);color:var(--mu);font-size:14px;line-height:1.6}
+.cta b{color:#fff}
+.stats{display:flex;gap:10px;margin:16px 0}
+.stats div{flex:1;border:1px solid var(--bd);border-radius:10px;padding:12px;text-align:center;font-size:12px;color:var(--mu)}
+.stats b{display:block;font-size:22px;color:#fff;font-weight:600}
+</style>
+</head>
+<body>
+<div class="app">
+  <div id="start" class="card">
+    <h1>Какой ты мультимедиа-творец?</h1>
+    <p>За играми, фильмами, приложениями и соцсетями стоят люди, которые соединяют изображение, видео, звук и удобство. Ответь на 18 вопросов уровня 10–11 класса и узнай, какая творческая профессия подходит тебе больше всего.</p>
+    <p>На каждый вопрос 20 секунд. Чем быстрее верный ответ и длиннее серия, тем больше очков.</p>
+    <button class="btn" id="go">Начать</button>
+  </div>
+
+  <div id="game" class="card hide">
+    <div class="top"><span id="num"></span><span id="timer"></span><span id="score"></span></div>
+    <div class="bar"><i id="bar"></i></div>
+    <span class="tag" id="cat"></span>
+    <h2 class="q" id="q"></h2>
+    <div id="opts"></div>
+    <div id="exp" class="exp hide"></div>
+    <button class="btn hide" id="next">Дальше</button>
+  </div>
+
+  <div id="end" class="card hide">
+    <p class="em" id="emo"></p>
+    <p style="margin:0">Тебе подходит профессия:</p>
+    <h1 id="rank"></h1>
+    <p id="desc"></p>
+    <div class="chips" id="tools"></div>
+    <div class="stats">
+      <div><b id="s0"></b>очков</div>
+      <div><b id="s1"></b>верных</div>
+      <div><b id="s2"></b>макс. серия</div>
+    </div>
+    <div id="bars"></div>
+    <div class="cta">🎓 <b>Хочешь делать такое по-настоящему?</b> На специальности «Мультимедийные технологии и информационный дизайн» учатся создавать интерфейсы, графику, анимацию, видео и звук, то есть всё, что ты сейчас попробовал.</div>
+    <button class="btn" id="share">Поделиться результатом</button>
+    <button class="btn sec" id="again">Играть ещё раз</button>
+  </div>
+</div>
+
+<script>
+const P={
+ux:{n:"UX/UI-дизайнер",e:"📱",d:"Ты думаешь о людях: как сделать, чтобы приложением или сайтом было удобно и приятно пользоваться. Ты проектируешь экраны, кнопки и путь пользователя.",t:["Figma","прототипы","исследования"]},
+mo:{n:"Моушн-дизайнер",e:"✨",d:"Ты оживляешь картинки: заставки, рекламные ролики, анимированные логотипы и эффекты, на которые хочется смотреть снова и снова.",t:["After Effects","анимация","графика"]},
+vi:{n:"Видеомонтажёр",e:"🎬",d:"Ты превращаешь горы отснятого материала в динамичный ролик, клип или фильм: выбираешь кадры, ритм, эффекты и настроение.",t:["Premiere Pro","DaVinci Resolve","цветокоррекция"]},
+so:{n:"Саунд-дизайнер",e:"🎧",d:"Ты создаёшь мир, который слышно: звуки шагов, взрывов, интерфейсов и музыка делают игры и фильмы живыми.",t:["звукозапись","монтаж звука","музыка"]},
+gr:{n:"Графический дизайнер",e:"🎨",d:"Ты чувствуешь цвет, шрифт и композицию: логотипы, постеры, упаковка и соцсети в твоих руках выглядят стильно.",t:["Photoshop","Illustrator","типографика"]},
+td:{n:"3D-художник",e:"🧊",d:"Ты лепишь персонажей, предметы и целые миры в трёх измерениях для игр, кино, рекламы и виртуальной реальности.",t:["Blender","моделирование","текстуры"]}
+};
+const Q=[
+["ux","Интерфейсы","Закон Фитса утверждает, что время попадания курсором или пальцем в цель зависит от…",["размера цели и расстояния до неё","цвета цели","количества кликов за сессию","яркости экрана"],0,"Поэтому важные кнопки делают крупными и размещают так, чтобы до них было легко дотянуться."],
+["ux","Интерфейсы","Что такое A/B-тестирование интерфейса?",["Проверка кода на ошибки","Сравнение двух вариантов на разных группах пользователей","Тест на скорость загрузки","Опрос только внутри команды"],1,"Половине пользователей показывают вариант A, другой половине вариант B, а потом сравнивают метрики: клики, покупки, время."],
+["ux","Интерфейсы","Что такое «персона» (persona) в UX-проектировании?",["Реальный клиент компании","Обобщённый образ типичного пользователя с целями и проблемами","Логотип бренда","Талисман продукта"],1,"Персона помогает команде проектировать под реальные потребности, а не под «среднего человека»."],
+["mo","Анимация","Что делает функция плавности ease-in-out?",["Ускоряет объект до конца","Замедляет движение в начале и в конце","Делает движение равномерным","Меняет цвет объекта"],1,"Такое движение выглядит естественно, потому что реальные предметы разгоняются и тормозят постепенно."],
+["mo","Анимация","Какой принцип анимации — подготовка зрителя к действию, например замах перед ударом?",["Упреждение (anticipation)","Дуга","Вторичное действие","Постановка"],0,"Упреждение показывает, что сейчас что-то произойдёт, и делает действие убедительнее."],
+["mo","Анимация","Что такое ключевой кадр (keyframe) в компьютерной анимации?",["Самый красивый кадр","Кадр, где аниматор задаёт важное состояние объекта, а промежуточные просчитывает программа","Последний кадр ролика","Кадр со звуком"],1,"Промежуточные кадры получаются интерполяцией между ключевыми."],
+["vi","Видео","Что делает кодек, например H.264?",["Усиливает сигнал Wi-Fi","Сжимает видео при хранении и распаковывает при просмотре","Добавляет субтитры","Стабилизирует картинку"],1,"Название «кодек» — от «кодер-декодер». Без сжатия минута видео занимала бы гигабайты."],
+["vi","Видео","Что произойдёт, если при том же разрешении увеличить битрейт видео?",["Файл станет меньше","Обычно качество вырастет, а файл станет больше","Изменится соотношение сторон","Видео станет чёрно-белым"],1,"Битрейт — объём данных на секунду видео, поэтому он напрямую влияет на размер файла."],
+["vi","Видео","Как называется монтажный приём, когда звук следующей сцены начинается ещё до смены картинки?",["J-cut","Jump cut","Fade out","Freeze frame"],0,"В J-cut зритель слышит новую сцену раньше, чем её увидит. Это плавно «подводит» его к переходу."],
+["so","Звук","Какая частота дискретизации используется у аудио компакт-дисков?",["8 кГц","22,05 кГц","44,1 кГц","192 кГц"],2,"44,1 кГц с запасом покрывает диапазон слуха человека, примерно до 20 кГц."],
+["so","Звук","Согласно теореме Котельникова (Найквиста — Шеннона), частота дискретизации должна быть…",["равна максимальной частоте сигнала","минимум вдвое выше максимальной частоты сигнала","в десять раз ниже частоты сигнала","любой, если есть хороший микрофон"],1,"Иначе при оцифровке возникают искажения, которые называют алиасингом."],
+["so","Звук","Что такое реверберация?",["Усиление басов","Затухающий отзвук из-за множества отражений от поверхностей","Шум микрофона","Сжатие громкости"],1,"Поэтому в пустом зале слышно эхо, а в комнате с мебелью звук суше. Саунд-дизайнеры специально подбирают реверберацию."],
+["gr","Графика и цвет","В какой цветовой модели цвет задаётся оттенком, насыщенностью и яркостью?",["HSB (HSV)","CMYK","Grayscale","Indexed Color"],0,"Этой моделью удобно пользоваться в дизайне: можно менять только яркость или насыщенность, не трогая оттенок."],
+["gr","Графика и цвет","Что такое растеризация?",["Сжатие файла в архив","Превращение векторного изображения в набор пикселей","Печать на принтере","Смена шрифта"],1,"При экспорте векторного макета в PNG или JPEG он как раз растеризуется."],
+["gr","Графика и цвет","Для чего в дизайне используют модульную сетку?",["Для защиты от копирования","Для упорядоченного размещения элементов по направляющим","Чтобы увеличить размер файла","Чтобы использовать меньше цветов"],1,"Сетка делает макет аккуратным и помогает сохранять единый ритм на всех страницах."],
+["td","3D","Что такое рендеринг в 3D-графике?",["Лепка модели","Расчёт итогового 2D-изображения по 3D-сцене","Создание скелета","Сжатие текстур"],1,"Программа считает свет, тени и материалы. Один кадр для кино иногда рендерится часами."],
+["td","3D","Что такое риггинг?",["Раскраска модели","Создание скелета и управляющих элементов для анимации персонажа","Установка света","Экспорт в PNG"],1,"Благодаря риггу аниматор двигает «кости» и контроллеры, а не отдельные точки модели."],
+["td","3D","Что передаёт карта нормалей (normal map)?",["Цвет объекта","Иллюзию мелких неровностей без добавления полигонов","Расположение камеры","Громкость звука"],1,"Это экономит ресурсы: на низкополигональной модели кирпичная кладка или поры кожи выглядят объёмными."]
+];
+const $=id=>document.getElementById(id);
+const sh=a=>{a=[...a];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
+let qs,i,score,streak,best,right,pts,tl,t0,tm,done;const T=20;
+function show(id){["start","game","end"].forEach(x=>$(x).classList.toggle("hide",x!==id));window.scrollTo(0,0)}
+function start(){
+  qs=sh(Q).map(q=>({p:q[0],cat:q[1],q:q[2],o:sh(q[3].map((t,k)=>({t,c:k===q[4]}))),e:q[5]}));
+  i=0;score=0;streak=0;best=0;right=0;pts={ux:0,mo:0,vi:0,so:0,gr:0,td:0};show("game");ask();
+}
+function ask(){
+  const q=qs[i];done=false;
+  $("num").textContent="Вопрос "+(i+1)+"/"+qs.length;
+  $("score").textContent="⭐ "+score+(streak>1?" 🔥"+streak:"");
+  $("cat").textContent=q.cat;$("q").textContent=q.q;
+  $("exp").classList.add("hide");$("next").classList.add("hide");
+  const box=$("opts");box.innerHTML="";
+  q.o.forEach((o,k)=>{const b=document.createElement("button");b.className="opt";b.textContent=o.t;b.onclick=()=>pick(k);box.appendChild(b)});
+  tl=T;t0=Date.now();upd();clearInterval(tm);
+  tm=setInterval(()=>{tl=Math.max(0,T-(Date.now()-t0)/1000);upd();if(tl<=0)pick(-1)},100);
+}
+function upd(){$("timer").textContent="⏱ "+Math.ceil(tl)+" с";$("bar").style.width=(tl/T*100)+"%"}
+function pick(k){
+  if(done)return;done=true;clearInterval(tm);
+  const q=qs[i],btns=[...document.querySelectorAll(".opt")];
+  btns.forEach((b,n)=>{b.disabled=true;if(q.o[n].c)b.classList.add("ok")});
+  const ok=k>=0&&q.o[k].c;
+  if(ok){streak++;best=Math.max(best,streak);right++;pts[q.p]++;score+=100+Math.round(tl*3)+(streak>1?(streak-1)*10:0)}
+  else{streak=0;if(k>=0)btns[k].classList.add("bad")}
+  $("score").textContent="⭐ "+score+(streak>1?" 🔥"+streak:"");
+  $("exp").textContent=(ok?"🎉 Верно! ":k<0?"⏰ Время вышло. ":"🙈 Мимо. ")+q.e;
+  $("exp").classList.remove("hide");
+  $("next").textContent=i===qs.length-1?"Узнать результат":"Дальше";
+  $("next").classList.remove("hide");
+}
+function finish(){
+  show("end");
+  const keys=Object.keys(P);
+  const top=keys.reduce((a,b)=>pts[b]>pts[a]?b:a,keys[0]);
+  const p=P[top];
+  $("emo").textContent=p.e;$("rank").textContent=p.n;$("desc").textContent=p.d;
+  $("tools").innerHTML=p.t.map(x=>"<b>"+x+"</b>").join("");
+  $("s0").textContent=score;$("s1").textContent=right+"/"+qs.length;$("s2").textContent=best;
+  $("bars").innerHTML=keys.map(k=>"<div class='row'><span>"+P[k].e+" "+P[k].n+"</span><i style='width:"+(pts[k]/3*92+4)+"%'></i></div>").join("");
+  window.__share="Я прошёл квиз «Какой ты мультимедиа-творец?» и получил профессию: "+p.n+" "+p.e+" ("+score+" очков). А ты кто?";
+}
+$("go").onclick=start;$("again").onclick=start;
+$("next").onclick=()=>{i++;i<qs.length?ask():finish()};
+$("share").onclick=async()=>{
+  try{if(navigator.share){await navigator.share({text:window.__share})}else{await navigator.clipboard.writeText(window.__share);$("share").textContent="Скопировано ✅"}}
+  catch(e){$("share").textContent="Не удалось скопировать"}
+};
+</script>
+</body>
+</html>
